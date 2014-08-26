@@ -1,0 +1,178 @@
+
+000017 - check for selinux=0 
+000018 - AIDE - A file integrity baseline must be created.
+000020 - SELINUX=enforcing
+000023 - SELINUXTYPE=targeted
+000025 - Check: ls -RZ /dev | grep unlabeled_t , 
+000061 - need add_after function
+000062 - need add_after function
+000064 - set crypt_style = sha512 
+000068 - set grub boot password (interactive)
+000073 - needs banner select option
+000091 - set net.ipv4.conf.default.accept_redirects = 0
+000092 - set net.ipv4.icmp_echo_ignore_broadcasts = 1
+000093 - net.ipv4.icmp_ignore_bogus_error_responses = 1
+000095 - net.ipv4.tcp_syncookies = 1
+000103 - chkconfig ip6tables on, need to see if the system is valid ipv6
+000106 - same as above
+000107 - same as above
+000113 - chkconfig iptables on 
+000116 - same as above
+000117 - same as above
+000120 -  /etc/sysconfig/iptables <- eval this for unless allow/ deny
+000126 - grep -r rds /etc/modprobe.conf /etc/modprobe.d , add to modprobe:  install rds /bin/true
+000148 - chkconfig auditd on
+000154 - chkconfig auditd on / service auditd start
+000159 - /etc/audit/auditd.conf , num_logs = 5
+000160 - /etc/audit/auditd.conf ,  max_log_file = 6
+000161 - /etc/audit/auditd.conf , set ACTION]" to "rotate"
+000165 -  auditctl -l | grep syscall | grep adjtimex , /etc/audit/audit.rules audit_time_rules  -a always,exit -F arch=b64 -S adjtimex -k audit_time_rules
+000167 - auditctl -l | grep syscall | grep settimeofday , /etc/audit/audit.rules , audit_time_rules -a always,exit -F arch=b64 -S settimeofday -k audit_time_rules
+000169 - auditctl -l | grep syscall | grep stime , /etc/audit/audit.rules , -a always,exit -F arch=b64 -S adjtimex -S settimeofday -S clock_settime -k audit_time_rules
+000171 - auditctl -l | grep syscall | grep clock_settime , /etc/audit/audit.rules , audit_time_rules -a always,exit -F arch=b64 -S adjtimex -S settimeofday -S clock_settime 
+000173 - auditctl -l | grep "watch=/etc/localtime"
+000174 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000175 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000176 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000177 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000182 - auditctl -l | egrep '(sethostname|setdomainname|/etc/issue|/etc/issue.net|/etc/hosts|/etc/sysconfig/network)'
+000183 - auditctl -l | grep "dir=/etc/selinux"
+000184 - auditctl -l | grep syscall | grep chmod
+000185 - auditctl -l | grep syscall | grep chown
+000186 - auditctl -l | grep syscall | grep fchmod
+000187 - auditctl -l | grep syscall | grep fchmodat
+000188 - auditctl -l | grep syscall | grep fchown
+000189 - auditctl -l | grep syscall | grep fchownat
+000190 - auditctl -l | grep syscall | grep fremovexattr
+000191 - auditctl -l | grep syscall | grep fsetxattr
+000192 - auditctl -l | grep syscall | grep lchown
+000193 - auditctl -l | grep syscall | grep lremovexattr
+000194 - auditctl -l | grep syscall | grep lsetxattr
+000195 - auditctl -l | grep syscall | grep removexattr
+000196 - auditctl -l | grep syscall | grep setxattr
+000197 - grep EACCES /etc/audit/audit.rules | grep EPERM /etc/audit/audit.rules
+000198 - find / -xdev -type f -perm -4000 -o -perm -2000 2>/dev/null , grep path /etc/audit/audit.rules 
+000199 - auditctl -l | grep syscall | grep mount
+000200 - auditctl -l | grep syscall | grep unlink | grep -v unlinkat (and abunch of other checks)
+000201 - auditctl -l | grep "watch=/etc/sudoers"
+000211 - service telnet status , chkconfig telnet off
+000213 - rpm -q rsh-server , yum erase rsh-server
+000214 - chkconfig "rsh" --list "rsh" 0:off 1:off 2:off 3:off 4:off 5:off 6:off, chkconfig rsh off
+000216 - chkconfig "rexec" --list "rexec" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
+000218 - chkconfig "rlogin" --list "rlogin" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
+000220 - rpm -q ypserv , yum erase ypserv
+000221 - chkconfig "ypbind" --list "ypbind" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
+000222 - rpm -q tftp-server , yum erase tftp-server
+000223 - chkconfig "tftp" --list "tftp" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
+000224 - ervice crond status, chkconfig crond on
+000227 - SSH: sshd set to protocol 2
+000230 - SSH: ClientAliveInterval 900
+000231 - SSH: ClientAliveCountMax 0
+000234 - SSH: IgnoreRhosts yes
+000236 - SSH: HostbasedAuthentication no
+000237 - SSH: PermitRootLogin no
+000241 - SSH: PermitUserEnvironment no
+000246 - chkconfig "avahi-daemon" --list "avahi-daemon" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
+000249 - if postfix is installed, /etc/postfix/main.cf inet_interfaces = localhost
+000252 - grep start_tls /etc/pam_ldap.conf
+000253 - grep cert /etc/pam_ldap.conf , tls_cacertfile /etc/pki/tls/CA/cacert.pem or  tls_cacertdir /etc/pki/tls/CA
+000256 - rpm -q openldap-servers , yum erase openldap-servers
+000257 - gconftool-2 -g /apps/gnome-screensaver/idle_delay , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type int --set /apps/gnome-screensaver/idle_delay 15
+000259 - gconftool-2 -g /apps/gnome-screensaver/lock_enabled , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory  --type bool --set /apps/gnome-screensaver/lock_enabled true
+000260 - gconftool-2 -g /apps/gnome-screensaver/mode , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type string --set /apps/gnome-screensaver/mode blank-only
+000261 - chkconfig "abrtd" --list "abrtd" 0:off 1:off 2:off 3:off 4:off 5:off 6:off , chkconfig abrtd off
+000262 - chkconfig atd off
+000266 - chkconfig "oddjobd" --list "oddjobd" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
+000267 - chkconfig "qpidd" --list "qpidd" 0:off 1:off 2:off 3:off 4:off 5:off 6:off , chkconfig qpidd off
+000268 - chkconfig "rdisc" --list "rdisc" 0:off 1:off 2:off 3:off 4:off 5:off 6:off , chkconfig rdisc off
+000269 - mount | grep nfs , then it needs nodev
+000270 - mount | grep nfs ,  then it needs nosuid
+000271 - grep noexec /etc/fstab on removable media
+000272 - grep signing /etc/samba/smb.conf , client signing = mandatory
+000273 - grep sec /etc/fstab , should show either "krb5i" or "ntlmv2i" if samba mounts are in use
+000274 - grep remember /etc/pam.d/system-auth , remember=24 , Do not allow users to reuse recent passwords.
+000275 - filesystem encryption test, could only be done through a kickstart
+000276 - filesystem encryption test, could only be done through a kickstart
+000277 - filesystem encryption test, could only be done through a kickstart
+000278 - checking audit permissions, rpm -V audit | grep '^.M' 
+000279 - rpm -V audit | grep '^.....U' , rpm --setugids audit
+000280 - rpm -V audit | grep '^......G' , rpm --setugids audit
+000281 - rpm -V audit | grep '$1 ~ /..5/ && $2 != "c"' , rpm -V audit | grep '^..5'
+000282 - find / -xdev -type f -perm -002 , find world-writable files
+000284 - grep uvscan /etc/cron* /var/spool/cron/* , and check the dates on the definitions (this is a check only test)
+000285 - bah. This is a lame attempt to say selinux is a HIDS
+000287 - postfix should be installed, chkconfig postfix on , service postfix start
+000288 - rpm -q sendmail , yum erase sendmail
+000289 - chkconfig "netconsole" --list "netconsole" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
+000290 - grep initdefault /etc/inittab , look for id:3:initdefault:
+000291 - rpm -qi xorg-x11-server-common , should not be installed
+000292 - /etc/sysconfig/network-scripts/ifcg to make sure dhcp is not in use
+000294 - pwck -rq, check the gids against the group & passwd files
+000296 - pwck -rq, check for duplicate account names
+000297 - chage -l <user>, Verify each of temp accounts has an expiration date set as documented.
+000298 - chage -l [USER] , verify each emergency account has an expiration date set as documented.
+000299 - grep pam_cracklib /etc/pam.d/system-auth , # password required pam_cracklib.so maxrepeat=3
+000302 - AIDE is in cron, grep aide /etc/crontab , 05 4 * * * root /usr/sbin/aide --check
+000303 - grep aide /etc/crontab , 05 4 * * * root /usr/sbin/aide --check
+000304 - 05 4 * * * root /usr/sbin/aide --check
+000305 - 05 4 * * * root /usr/sbin/aide --check
+000306 - 05 4 * * * root /usr/sbin/aide --check
+000307 - 05 4 * * * root /usr/sbin/aide --check
+000308 - grep core /etc/security/limits.conf , hard core 0
+000309 - if NFS, grep insecure_locks /etc/exports 
+000313 - /etc/audit/auditd.conf , action_mail_acct = root
+000319 - grep "maxlogins" /etc/security/limits.conf , hard maxlogins 10
+000320 - grep ":FORWARD" /etc/sysconfig/iptables , looking for unless allow deny
+000321 - rpm -q openswan , yum install openswan
+000324 - gconftool-2 -g /apps/gdm/simple-greeter/banner_message_enable
+000326 - gconftool-2 -g /apps/gdm/simple-greeter/banner_message_text , Banner tags
+000335 - grep "INACTIVE" /etc/default/useradd , INACTIVE=35
+000336 - find / -xdev -type d -perm 002 ! -perm 1000
+000337 - find [PART] -xdev -type d -perm 0002 -uid +500 -print
+000338 - grep "server_args" /etc/xinetd.d/tftp , grep "server_args" /etc/xinetd.d/tftp , server_args = -s /var/lib/tftpboot
+000339 - if vsftpd, grep vsftpd /etc/xinetd.d/* , grep xferlog_enable [vsftpd config file]
+000340 - if snmpd,  grep 'v1\|v2c\|com2sec' /etc/snmp/snmpd.conf | grep -v '^#'
+000341 - if snmpd, grep -v "^#" /etc/snmp/snmpd.conf| grep public
+000342 - grep "umask" /etc/bashrc
+000343 - grep "umask" /etc/csh.cshrc
+000344 - grep "umask" /etc/profile
+000345 - grep -i "umask" /etc/login.defs
+000346 - grep umask /etc/init.d/functions
+000347 - find /home -xdev -name .netrc ,
+000348 - if vsftpd , banner_file=/etc/issue
+000349 - Interview the SA to determine if all accounts not exempted by policy are using CAC authentication.
+000356 - grep pam_faillock /etc/pam.d/system-auth-ac , fail_interval=900
+000383 - grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c %a:%n, chmod 0640 [audit_file]
+000384 - grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c  %U:%n , chown root [audit_file]
+000385 - grep "^log_file" /etc/audit/auditd.conf|sed 's/^[^/]*//; s/[^/]*$//'|xargs stat -c %a:%n , chmod go-w [audit_directory]
+000519 - check if package hases are different fro what is expected by the rpm db , and reinstall (interactive?)
+000521 - postconf alias_map , Set up an alias for root that forwards to a monitored email address (interactive)
+000523 - if ipv6, grep ":INPUT" /etc/sysconfig/ip6tables for unless allow/deny
+000524 - interview for automated system managing user accounts 
+000527 - The login user list must be disabled.
+ 
+
+
+
+
+
+
+
+
+
+
+
+000216 - 
+
+
+
+
+
+
+
+
+
+
+000321 - The system must provide VPN connectivity for communications over untrusted networks.
+000372 - The operating system, upon successful logon/access, must display to the user the number of unsuccessful logon/access attempts since the last successful logon/access.
+
