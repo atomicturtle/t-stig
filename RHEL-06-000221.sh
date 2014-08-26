@@ -75,9 +75,14 @@
 #	
 # Global Variables
 PDI=RHEL-06-000221
-#
+
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed ypbind
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+        rpm -e ypbind
+fi
 #END_REMEDY
 

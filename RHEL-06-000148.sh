@@ -67,7 +67,21 @@
 PDI=RHEL-06-000148
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
 #END_CHECK
 #BEGIN_REMEDY
+is_chkconfig_on auditd
+
+if [ $? -ne 0 ]
+then
+	set_chkconfig_on auditd
+fi
+
+is_status_running auditd
+if [ $? -ne 0 ]
+then
+	set_status_running auditd
+fi
+
 #END_REMEDY
 

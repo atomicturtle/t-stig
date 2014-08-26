@@ -81,9 +81,14 @@
 #	
 # Global Variables
 PDI=RHEL-06-000262
-#
+
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed at
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+        rpm -e at
+fi
 #END_REMEDY
 

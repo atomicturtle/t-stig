@@ -66,7 +66,13 @@
 PDI=RHEL-06-000224
 #
 #BEGIN_CHECK
+. ./aqueduct_check
+is_chkconfig_on crond
 #END_CHECK
+
 #BEGIN_REMEDY
+if [ $? -ne 0 ]; then
+	chkconfig crond on
+fi
 #END_REMEDY
 

@@ -66,9 +66,19 @@
 #	
 # Global Variables
 PDI=RHEL-06-000091
+SEVERITY=low
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+KERNEL_VAR=`sysctl net.ipv4.conf.default.accept_redirects | awk '{ print $NF }'`
 #END_CHECK
 #BEGIN_REMEDY
+
+if [ $KERNEL_VAR -ne 0 ]; then
+	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.default.accept_redirects = 0" "net.ipv4.conf.default.accept_redirects"
+	show_message $PDI "sysctl disable icmp redirects" fixed
+else
+	show_message $PDI "sysctl disable icmp redirects" pass
+fi
 #END_REMEDY
 

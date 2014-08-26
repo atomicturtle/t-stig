@@ -7,6 +7,36 @@ DATE=`date +%Y-%j`;
 REVISION=yes
 FIX_MODE=1
 
+
+function add_entry_after {
+# Adds an entry after an existing entry
+# 
+#  arguments:
+#  add_entry_after ($1, $2, $3)
+#      $1      - Existing Entry
+#      $2      - Entry to add
+#      $3      - File to edit
+
+        FILE=$3
+        /bin/grep -qPzo -- "$1\n$2" $FILE && return
+        /bin/sed -i -r -e "/^$(/bin/echo -n $1 | /usr/bin/tr "/" ".")$/d" $FILE
+        /bin/sed -i -r -e "/$1/a$2" $FILE
+}
+
+function add_entry_before {
+# Adds an entry before an existing entry
+#  arguments:
+#  add_entry_before ($1, $2, $3)
+#      $1      - Existing entry
+#      $2      - Entry to add
+#      $3      - File to edit    
+
+        FILE=$3
+        /bin/grep -qPzo -- "$2\n$1" $FILE && return
+        /bin/sed -i -r -e "/^$(/bin/echo -n $1 | /usr/bin/tr "/" ".")$/d" $FILE
+        /bin/sed -i -r -e "/$2/a$1" $FILE
+}
+   
 function line_count() {
         # Return the expected count of lines.
         BASE_COUNT=`grep -c ^$1 $2`

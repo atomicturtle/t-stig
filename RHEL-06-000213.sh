@@ -58,9 +58,15 @@
 #	
 # Global Variables
 PDI=RHEL-06-000213
-#
+
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed rsh-server
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+        rpm -e rsh-server
+fi
 #END_REMEDY
+
 

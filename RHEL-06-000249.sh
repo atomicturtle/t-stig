@@ -61,7 +61,12 @@
 PDI=RHEL-06-000249
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG="/etc/postfix/main.cf"
+if ! grep -q "^inet_interfaces = localhost" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFIG $PDI 'inet_interfaces = localhost' 'inet_interfaces'
+fi
 #END_REMEDY
 

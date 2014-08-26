@@ -65,9 +65,21 @@
 #	
 # Global Variables
 PDI=RHEL-06-000154
-#
 #BEGIN_CHECK
+. ./aqueduct_functions
 #END_CHECK
 #BEGIN_REMEDY
-#END_REMEDY
+is_chkconfig_on auditd
+
+if [ $? -ne 0 ]
+then
+	set_chkconfig_on auditd
+fi
+
+is_status_running auditd
+if [ $? -ne 0 ]
+then
+	set_status_running auditd
+fi
+
 

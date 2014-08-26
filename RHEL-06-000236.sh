@@ -64,9 +64,17 @@
 #	
 # Global Variables
 PDI=RHEL-06-000236
+
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/ssh/sshd_config
+if ! grep -q "^HostbasedAuthentication no" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFIG $PDI 'HostbasedAuthentication no' 'HostbasedAuthentication'
+	
+fi
 #END_REMEDY
+
 

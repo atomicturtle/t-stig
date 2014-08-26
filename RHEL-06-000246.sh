@@ -76,7 +76,12 @@
 PDI=RHEL-06-000246
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed avahi-daemon
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+        rpm -e avahi-daemon
+fi
 #END_REMEDY
 

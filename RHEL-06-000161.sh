@@ -78,7 +78,12 @@
 PDI=RHEL-06-000161
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/audit/auditd.conf
 #END_CHECK
 #BEGIN_REMEDY
+if ! grep -q "max_log_file_action = ROTATE" $PKG_CONFIG; then
+	edit_file $PKG_CONFIG $PDI '^max_log_file_action = ROTATE' 'max_log_file_action'
+fi
 #END_REMEDY
-
+ 

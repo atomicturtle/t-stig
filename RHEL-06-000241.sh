@@ -64,7 +64,13 @@
 PDI=RHEL-06-000241
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/ssh/sshd_config
+if ! grep -q "^PermitUserEnvironment no" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFIG $PDI 'PermitUserEnvironment no' 'PermitUserEnvironment'
+	
+fi
 #END_REMEDY
 

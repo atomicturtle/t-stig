@@ -72,7 +72,13 @@
 PDI=RHEL-06-000230
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/ssh/sshd_config
+if ! grep -q "^ClientAliveInterval 900" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFIG $PDI 'ClientAliveInterval 900' 'ClientAliveInterval'
+	
+fi
 #END_REMEDY
 

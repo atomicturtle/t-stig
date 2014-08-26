@@ -62,9 +62,13 @@
 #	
 # Global Variables
 PDI=RHEL-06-000231
-#
-#BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/ssh/sshd_config
+if ! grep -q "^ClientAliveCountMax 0" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFIG $PDI 'ClientAliveCountMax 0' 'ClientAliveCountMax'
+	
+fi
 #END_REMEDY
 

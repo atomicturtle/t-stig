@@ -66,6 +66,7 @@
 PDI=RHEL-06-000173
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
 #END_CHECK
 #BEGIN_REMEDY
 #END_REMEDY

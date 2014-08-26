@@ -80,9 +80,13 @@
 #	
 # Global Variables
 PDI=RHEL-06-000266
-#
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed  oddjob
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+        yum -y remove oddjob
+fi
 #END_REMEDY
 

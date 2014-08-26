@@ -74,6 +74,7 @@ PDI=RHEL-06-000096
 #BEGIN_CHECK
 
 . ./aqueduct_functions
+MOD_MSG="sysctl enable rp_filter"
 
 I4CARP=`sysctl net.ipv4.conf.all.rp_filter | awk '{ print $NF }'`
 
@@ -83,9 +84,13 @@ I4CARP=`sysctl net.ipv4.conf.all.rp_filter | awk '{ print $NF }'`
 if [ $I4CARP -ne 1 ]
 then
 	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.all.rp_filter = 1" "net.ipv4.conf.all.rp_filter"
+        show_message $PDI "$MOD_MSG" fixed
+else
+        show_message $PDI "$MOD_MSG" pass
+
 fi
 
-sysctl -p > /dev/null
+#sysctl -p > /dev/null
 
 #END_REMEDY
 

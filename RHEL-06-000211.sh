@@ -82,7 +82,12 @@
 PDI=RHEL-06-000211
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed telnet-server
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+	rpm -e telnet-server
+fi
 #END_REMEDY
 

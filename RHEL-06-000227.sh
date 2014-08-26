@@ -66,7 +66,13 @@
 PDI=RHEL-06-000227
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/ssh/sshd_config
+if ! grep -q "^Protocol 2" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFIG $PDI 'Protocol 2' 'Protocol'
+	
+fi
 #END_REMEDY
 

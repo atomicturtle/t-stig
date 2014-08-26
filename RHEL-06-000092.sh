@@ -67,9 +67,18 @@
 #	
 # Global Variables
 PDI=RHEL-06-000092
-#
+
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="sysctl ignore icmp brodcasts"
+KERNEL_VAR=`sysctl net.ipv4.icmp_echo_ignore_broadcasts | awk '{ print $NF }'`
 #END_CHECK
 #BEGIN_REMEDY
-#END_REMEDY
 
+if [ $KERNEL_VAR -ne 1 ]; then
+        edit_file /etc/sysctl.conf $PDI "net.ipv4.icmp_echo_ignore_broadcasts = 1" "net.ipv4.icmp_echo_ignore_broadcasts"
+        show_message $PDI "$MOD_MSG" fixed
+else
+        show_message $PDI "$MOD_MSG" pass
+fi
+# END_REMEDY

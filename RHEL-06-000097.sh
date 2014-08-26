@@ -86,7 +86,7 @@ then
 	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.default.rp_filter = 1" "net.ipv4.conf.default.rp_filter"
 fi
 
-sysctl -p > /dev/null
+#sysctl -p > /dev/null
 
 
 #END_REMEDY

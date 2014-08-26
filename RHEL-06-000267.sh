@@ -80,9 +80,13 @@
 #	
 # Global Variables
 PDI=RHEL-06-000267
-#
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed qpidd
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+        yum remove qpidd
+fi
 #END_REMEDY
 

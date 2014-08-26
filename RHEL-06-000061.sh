@@ -70,9 +70,27 @@
 #	
 # Global Variables
 PDI=RHEL-06-000061
-#
+SEVERITY=medium
+#deny=3
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="PAM disable accounts after 3 failures"
+PKG_CONFIG=/etc/pam.d/system-auth-ac
+verify_setting "deny=3" "unused" $PKG_CONFIG $PDI "$MOD_MSG" $SEVERITY
+
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -ne 0 ]; then
+	
+	R1="auth        sufficient    pam_unix.so try_first_pass"
+	R5='auth 	[default=die] 	pam_faillock.so authfail deny=3 unlock_time=604800 fail_interval=900'
+	R6='auth	required pam_faillock.so authsucc deny=3 unlock_time=604800 fail_interval=900'
+
+
+	# find this, add after
+	add_entry_after "$R1" "$R5" $PKG_CONFIG
+	add_entry_after "$R5" "$R6" $PKG_CONFIG
+
+fi
 #END_REMEDY
 

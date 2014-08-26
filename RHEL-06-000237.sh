@@ -63,7 +63,13 @@
 PDI=RHEL-06-000237
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/ssh/sshd_config
+if ! grep -q "^PermitRootLogin no" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFIG $PDI 'PermitRootLogin no' 'PermitRootLogin'
+	
+fi
 #END_REMEDY
 

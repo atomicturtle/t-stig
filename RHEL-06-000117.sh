@@ -65,8 +65,16 @@
 #	
 # Global Variables
 PDI=RHEL-06-000117
-#
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="iptables running"
+if service iptables status >/dev/null; then
+	show_message $PDI "$MOD_MSG" pass
+else
+	chkconfig iptables on
+	service iptables start >/dev/null
+	show_message $PDI "$MOD_MSG" fixed
+fi
 #END_CHECK
 #BEGIN_REMEDY
 #END_REMEDY
