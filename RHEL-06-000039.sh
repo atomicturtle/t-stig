@@ -62,6 +62,8 @@ PDI=RHEL-06-000039
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="/etc/passwd root ownership
 if [ -a "/etc/passwd" ]
 then
     CUROWN=`stat -c %U /etc/passwd`;
@@ -72,7 +74,10 @@ fi
 
 if [ "$CUROWN" != "root" ]
 then
-    chown root /etc/passwd
+    	chown root /etc/passwd
+	show_message $PDI "$MOD_MSG" fixed
+else
+	show_message $PDI "$MOD_MSG" pass
 fi
 
 #END_REMEDY

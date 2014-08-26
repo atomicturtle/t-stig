@@ -60,7 +60,7 @@ if [ -f /var/lib/aide/aide.db.new.gz ]; then
 else
 #END_CHECK
 #BEGIN_REMEDY
-  	/usr/sbin/aide --init
+  	/usr/sbin/aide --init >/dev/null 2>&1
 	if [ -f /var/lib/aide/aide.db.new.gz ]; then
 		cp /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
 	fi

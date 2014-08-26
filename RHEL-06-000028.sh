@@ -66,10 +66,20 @@
 # Global Variables
 PDI=RHEL-06-000028
 SEVERITY=low
+
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/securetty
+MOD_MSG="restrict root from serial consoles"
+if grep -q '^vc/[0-9]' $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
-sed -i -r -e '/^(\s*)ttyS[0-9]+/d' /etc/securetty
+	sed -i -r -e '/^(\s*)ttyS[0-9]+/d' $PKG_CONFIG
+        show_message $PDI "$MOD_MSG" fixed
+else
+        show_message $PDI "$MOD_MSG" pass
+fi
 #END_REMEDY
+
 

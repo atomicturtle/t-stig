@@ -60,14 +60,19 @@ PDI=RHEL-06-000036
 SEVERITY=medium
 #
 #BEGIN_CHECK
-if [ -a "/etc/gshadow" ]
-    then
+. ./aqueduct_functions
+MOD_MSG="/etc/gshadow root ownership"
+if [ -a "/etc/gshadow" ]; then
         CUROWN=`stat -c %U /etc/gshadow`;
-    if [ "$CUROWN" != "root" ]
-        then
+    	if [ "$CUROWN" != "root" ];then
 #END_CHECK
 #BEGIN_REMEDY
-            chown root /etc/gshadow
+            	chown root /etc/gshadow
+		show_message $PDI "$MOD_MSG" fixed
+		
+	else
+		show_message $PDI "$MOD_MSG" pass
+	fi
 fi
 #END_REMEDY
 

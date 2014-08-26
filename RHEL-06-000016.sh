@@ -72,6 +72,8 @@ if [ $? -ne 0 ]
 then
   	yum install aide -y >/dev/null
 	show_message $PDI "aide installed" fixed
+else
+	show_message $PDI "aide installed" pass
 fi
 
 # Start out by getting all file check definitions(line starting with a /)

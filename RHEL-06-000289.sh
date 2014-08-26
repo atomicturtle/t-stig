@@ -79,7 +79,11 @@
 PDI=RHEL-06-000289
 #
 #BEGIN_CHECK
+is_chkconfig_on netconsole
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -ne 0 ]; then
+	set_chkconfig_off netconsole
+fi
 #END_REMEDY
 

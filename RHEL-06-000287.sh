@@ -67,7 +67,21 @@
 PDI=RHEL-06-000287
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+is_rpm_installed postfix
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -ne 0 ]; then
+	yum -y install postfix
+	is_chkconfig_on postfix
+	if [ $? -ne 0 ]; then
+		chkconfig postfix on
+	fi
+
+	is_status_running postfix
+	if [ $? -ne 0 ]; then
+		service postfix start
+	fi
+fi
 #END_REMEDY
 

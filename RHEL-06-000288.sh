@@ -62,7 +62,11 @@
 PDI=RHEL-06-000288
 #
 #BEGIN_CHECK
+is_rpm_installed sendmail
 #END_CHECK
 #BEGIN_REMEDY
+if [ $? -eq 0 ]; then
+	yum -y remove sendmail
+fi
 #END_REMEDY
 

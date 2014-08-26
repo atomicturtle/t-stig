@@ -63,12 +63,17 @@ PDI=RHEL-06-000030
 SEVERITY=high
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG="/etc/pam.d/*"
+MOD_MSG="PAM disable empty password support"
+if grep -q 'nullok' $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
-grep 'nullok' /etc/pam.d/* > /dev/null
-if [ $? == 0 ]
-then
-    sed -i 's/ nullok//g' /etc/pam.d/*
+    	sed -i 's/ nullok//g' $PKG_CONFIG
+	show_message $PDI "$MOD_MSG" fixed
+else
+	show_message $PDI "$MOD_MSG" pass
+	
 fi
 #END_REMEDY
 

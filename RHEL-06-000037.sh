@@ -61,17 +61,20 @@ PDI=RHEL-06-000037
 SEVERITY=medium
 #
 #BEGIN_CHECK
-if [ -a "/etc/gshadow" ]
-then
+. ./aqueduct_functions
+MOD_MSG="/etc/gshadow group root ownership"
+if [ -a "/etc/gshadow" ]; then
         CURGOWN=`stat -c %G /etc/gshadow`;
 fi
 
 #END_CHECK
 #BEGIN_REMEDY
 
-if [ "$CURGOWN" != "root" ]
-then
+if [ "$CURGOWN" != "root" ]; then
         chgrp root /etc/gshadow
+	show_message $PDI "$MOD_MSG" fixed
+else
+	show_message $PDI "$MOD_MSG" pass
 fi
 
 #END_REMEDY

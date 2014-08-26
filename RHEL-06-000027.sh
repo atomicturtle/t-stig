@@ -71,8 +71,16 @@ PDI=RHEL-06-000027
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/securetty
+MOD_MSG="restrict root from virtual consoles"
+if grep -q '^vc/[0-9]' $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
-sed -i -r -e '/^(\s*)vc\/[0-9]+/d' /etc/securetty
+	sed -i -r -e '/^(\s*)vc\/[0-9]+/d' /etc/securetty
+	show_message $PDI "$MOD_MSG" fixed
+else
+	show_message $PDI "$MOD_MSG" pass
+fi
 #END_REMEDY
 

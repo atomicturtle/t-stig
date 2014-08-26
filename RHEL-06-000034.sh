@@ -60,6 +60,9 @@
 PDI=RHEL-06-000034
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="/etc/shadow group root ownership"
+
 #END_CHECK
 #BEGIN_REMEDY
 if [ -a "/etc/shadow" ]
@@ -68,8 +71,11 @@ if [ -a "/etc/shadow" ]
 fi
 
 if [ "$CURGOWN" != "root" ]
-    then
+then
         chgrp root /etc/shadow
+	show_message $PDI "$MOD_MSG" fixed
+else
+	show_message $PDI "$MOD_MSG" pass
 fi
 #END_REMEDY
 

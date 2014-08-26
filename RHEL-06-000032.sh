@@ -61,6 +61,8 @@ PDI=RHEL-06-000032
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="Non root UID 0 accounts"
 #END_CHECK
 #BEGIN_REMEDY
 
@@ -74,6 +76,8 @@ then
   echo " " >> $PDI-ROOTACCOUNTS.log
   echo $ROOTACCOUNTLIST >> $PDI-ROOTACCOUNTS.log
   echo "------------------------------" >> $PDI-ROOTACCOUNTS.log
+else
+	show_message $PDI "$MOD_MSG" pass
 fi
 
 

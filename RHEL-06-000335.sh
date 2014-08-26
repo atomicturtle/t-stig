@@ -79,7 +79,12 @@
 PDI=RHEL-06-000335
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/default/useradd
+if ! grep -q "INACTIVE=35" $PKG_CONFIG ; then
 #END_CHECK
 #BEGIN_REMEDY
+	edit_file $PKG_CONFG $PDI 'INACTIVE=35' 'INACTIVE'
+fi
 #END_REMEDY
 

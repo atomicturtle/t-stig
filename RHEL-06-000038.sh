@@ -60,6 +60,8 @@ PDI=RHEL-06-000038
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="/etc/gshadow permissions 0000"
 #END_CHECK
 #BEGIN_REMEDY
 if [ -a "/etc/gshadow" ]
@@ -79,6 +81,9 @@ if [ -a "/etc/gshadow" ]
 #END_CHECK
 #BEGIN_REMEDY
         chmod 0000 /etc/gshadow
+	show_message $PDI "$MOD_MSG" fixed
+    else
+	show_message $PDI "$MOD_MSG" pass
     fi
 fi
 #END_REMEDY

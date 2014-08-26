@@ -59,14 +59,18 @@
 # Global Variables
 PDI=RHEL-06-000031
 SEVERITY=medium
+MOD_MSG="/etc/passwd file must not contain password hashes"
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
 #END_CHECK
 #BEGIN_REMEDY
 if /bin/awk -F: '($2 != "x") {print $1}' /etc/passwd; then
-    exit 0
+	show_message $PDI "$MOD_MSG" pass
+    	exit 0
 else
-    pwconv
+	show_message $PDI "$MOD_MSG" fixed
+    	pwconv
 fi
 #END_REMEDY
 

@@ -62,6 +62,8 @@
 PDI=RHEL-06-000035
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="/etc/shadow permissions 0000"
 if [ -a "/etc/shadow" ]
   then
     # Pull the actual permissions
@@ -79,6 +81,9 @@ if [ -a "/etc/shadow" ]
 #END_CHECK
 #BEGIN_REMEDY
         chmod 0000 /etc/shadow
+	show_message $PDI "$MOD_MSG" fixed
+     else
+	show_message $PDI "$MOD_MSG" pass
     fi
 fi
 #END_REMEDY

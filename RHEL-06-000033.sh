@@ -64,6 +64,9 @@
 PDI=RHEL-06-000033
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="/etc/shadow root ownership"
+
 #END_CHECK
 #BEGIN_REMEDY
 if [ -a "/etc/passwd" ]
@@ -73,6 +76,9 @@ fi
 if [ "$CUROWN" != "root" ]
 then
     chown root /etc/shadow
+	show_message $PDI "$MOD_MSG" fixed
+else
+	show_message $PDI "$MOD_MSG" pass
 fi
 #END_REMEDY
 
