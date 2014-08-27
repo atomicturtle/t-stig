@@ -65,7 +65,10 @@
 PDI=RHEL-06-000259
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="Desktop lock_enabled"
 #END_CHECK
+gconf_setting bool /apps/gnome-screensaver/lock_enabled true $PDI "$MOD_MSG"
 #BEGIN_REMEDY
 #END_REMEDY
 

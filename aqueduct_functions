@@ -307,3 +307,30 @@ function verify_setting {
   fi
 }
 
+# gconf_setting
+#gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type int --set /apps/gnome-screensaver/idle_delay 15
+#gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type bool --set /apps/gnome-screensaver/idle_activation_enabled true
+#gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type bool --set /apps/gnome-screensaver/lock_enabled true
+#gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type string --set /apps/gnome-screensaver/mode blank-only
+#gdm gconftool-2 --type bool --set /apps/gdm/simple-greeter/banner_message_enable true
+#gdm gconftool-2 --type string --set /apps/gdm/simple-greeter/banner_message_text <BIG ARRAY>
+#gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type string --set /apps/gnome_settings_daemon/keybindings/screensaver "<Control><Alt>l"
+
+# gconf_setting <type> <path> <value> <pdi> <mod_msg>
+function gconf_setting {
+	type=$1
+	path=$2
+	value=$3
+	PDI=$4
+	MOD_MSG=$5
+
+	G_CONF=`gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --get  $path 2>/dev/null`	
+
+	if [ "$G_CONF" != "$value" ]; then
+	
+		gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type $type --set $path $value
+		show_message $PDI "$MOD_MSG" fixed
+	else
+		show_message $PDI "$MOD_MSG" pass
+	fi
+} 

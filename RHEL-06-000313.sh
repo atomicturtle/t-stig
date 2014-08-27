@@ -68,7 +68,7 @@ PDI=RHEL-06-000313
 #BEGIN_CHECK
 . ./aqueduct_functions
 PKG_CONFIG=/etc/audit/auditd.conf
-if grep -q "action_mail_acct = root" $PKG_CONFIG
+if grep -q "action_mail_acct = root" $PKG_CONFIG; then
 #END_CHECK
 #BEGIN_REMEDY
 	edit_file $PKG_CONFIG $PDI 'action_mail_acct = root' 'action_mail_acct'

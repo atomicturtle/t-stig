@@ -69,7 +69,10 @@ PDI=RHEL-06-000508
 SEVERITY=low
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="Desktop Screen Locking"
 #END_CHECK
 #BEGIN_REMEDY
+gconf_setting string /apps/gnome_settings_daemon/keybindings/screensaver "<Control><Alt>l" $PDI "$MOD_MSG"
 #END_REMEDY
 

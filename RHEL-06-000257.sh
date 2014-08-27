@@ -65,7 +65,10 @@
 PDI=RHEL-06-000257
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="Desktop Screen 15m autolock"
 #END_CHECK
 #BEGIN_REMEDY
+gconf_setting int /apps/gnome-screensaver/idle_delay 15 $PDI "$MOD_MSG"
 #END_REMEDY
 

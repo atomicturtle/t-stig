@@ -65,7 +65,9 @@
 PDI=RHEL-06-000324
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
 #END_CHECK
+sudo -u gdm gconftool-2  --type bool --set /apps/gdm/simple-greeter/banner_message_enable true
 #BEGIN_REMEDY
 #END_REMEDY
 

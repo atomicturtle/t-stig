@@ -65,7 +65,10 @@
 PDI=RHEL-06-000260
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="Desktop screensaver blank mode"
 #END_CHECK
 #BEGIN_REMEDY
+gconf_setting string /apps/gnome-screensaver/mode blank-only $PDI "$MOD_MSG"
 #END_REMEDY
 

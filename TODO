@@ -1,3 +1,11 @@
+Features:
+        reinstate loader
+        profile support
+        fix/check mode
+        undo wrapper
+
+Bugs:
+XXXXXX- /etc/issue has been changed to something wrong
 000029 - needs output work
 000045 - output, file crawler for perms, function?
 000046 - output, file crawler for perms, function?
@@ -16,23 +24,23 @@
 000058 - output, PAM, enable pam_cracklib ocredit
 000059 - output, PAM, enable pam_cracklib lcredit
 000060 - output, PAM, enable pam_cracklib difok
-000061 - need add_after function
+000061 - INCOMPLETE, need add_after function
 	system-auth-ac, changes dont work
 	nispom uses tally, so this is OK
-000062 - need add_after function
+000062 - INCOMPLETE, need add_after function
 	grep sha512 /etc/pam.d/system-auth, what was the command in ASL?
 	authconfig --test |grep hashing
 	authconfig --passalgo=sha512 --update
-000063 - /etc/login.defs, set ENCRYPT_METHOD
+000063 - INCOMPLETE, /etc/login.defs, set ENCRYPT_METHOD
         authconfig --passalgo=sha512 --update
-000064 - set crypt_style = sha512 
+000064 - INCOMPLETE, set crypt_style = sha512 
 	grep sha512 /etc/libuser, what was the command in ASL?
 	authconfig --passalgo=sha512 --update
-000068 - set grub boot password (interactive)
+000068 - INCOMPLETE, set grub boot password (interactive)
 000069 - output, force auth for single user. Two step fix, verify_setting maybe?
 000070 - output, /etc/sysconfig/init, turn off prompt
 000071 - output, installs screen
-000073 - output, needs banner select option
+000073 - INCOMPLETE, output, needs banner select option
 	BANNER=/path/to/banner in /etc/aqueduct/profile?
 000078 - output, sets kernel.randomize_va_space=2 
 	clean up sysctl function
@@ -186,7 +194,7 @@
 	remove service function
 000223 - output
 	remove service function
-000224 - output
+000224 - output, buggy
 	is service installed & running function
 000227 - output
 000230 - output
@@ -207,13 +215,6 @@
 000252 - low, INCOMPLETE, grep start_tls /etc/pam_ldap.conf
 000253 - low, INCOMPLETE, grep cert /etc/pam_ldap.conf , tls_cacertfile /etc/pki/tls/CA/cacert.pem or  tls_cacertdir /etc/pki/tls/CA
 000256 - INCOMPLETE, rpm -q openldap-servers , yum erase openldap-servers, Perhaps from /etc/aqueduct/profile?
-000257 - INCOMPLETE, gconftool-2 -g /apps/gnome-screensaver/idle_delay , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type int --set /apps/gnome-screensaver/idle_delay 15
-	Desktop detection & function
-000258 - Buggy, attempt at a gconftool function here
-000259 - INCOMPLETE, gconftool-2 -g /apps/gnome-screensaver/lock_enabled , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory  --type bool --set /apps/gnome-screensaver/lock_enabled true
-	Desktop detection
-000260 - INCOMPLETE, gconftool-2 -g /apps/gnome-screensaver/mode , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type string --set /apps/gnome-screensaver/mode blank-only
-	Desktop detection
 000261 - output
 	service remove function
 000262 - output
@@ -226,66 +227,105 @@
 000268 - low, INCOMPLETE, turn off rdisk (but not remove)
 000269 - low, INCOMPLETE, mount | grep nfs , then it needs nodev
 000270 - low, INCOMPLETE, mount | grep nfs ,  then it needs nosuid
-000271 - grep noexec /etc/fstab on removable media
-000272 - grep signing /etc/samba/smb.conf , client signing = mandatory
-000273 - grep sec /etc/fstab , should show either "krb5i" or "ntlmv2i" if samba mounts are in use
-000274 - grep remember /etc/pam.d/system-auth , remember=24 , Do not allow users to reuse recent passwords.
-000275 - filesystem encryption test, could only be done through a kickstart
-000276 - filesystem encryption test, could only be done through a kickstart
-000277 - filesystem encryption test, could only be done through a kickstart
-000278 - checking audit permissions, rpm -V audit | grep '^.M' 
-000279 - rpm -V audit | grep '^.....U' , rpm --setugids audit
-000280 - rpm -V audit | grep '^......G' , rpm --setugids audit
-000281 - rpm -V audit | grep '$1 ~ /..5/ && $2 != "c"' , rpm -V audit | grep '^..5'
-000282 - find / -xdev -type f -perm -002 , find world-writable files
-000284 - grep uvscan /etc/cron* /var/spool/cron/* , and check the dates on the definitions (this is a check only test)
-000285 - bah. This is a lame attempt to say selinux is a HIDS
-000287 - postfix should be installed, chkconfig postfix on , service postfix start
-000288 - rpm -q sendmail , yum erase sendmail
-000289 - chkconfig "netconsole" --list "netconsole" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
-000290 - grep initdefault /etc/inittab , look for id:3:initdefault:
-000291 - rpm -qi xorg-x11-server-common , should not be installed
-000292 - /etc/sysconfig/network-scripts/ifcg to make sure dhcp is not in use
-000294 - pwck -rq, check the gids against the group & passwd files
-000296 - pwck -rq, check for duplicate account names
-000297 - chage -l <user>, Verify each of temp accounts has an expiration date set as documented.
-000298 - chage -l [USER] , verify each emergency account has an expiration date set as documented.
-000299 - grep pam_cracklib /etc/pam.d/system-auth , # password required pam_cracklib.so maxrepeat=3
-000302 - AIDE is in cron, grep aide /etc/crontab , 05 4 * * * root /usr/sbin/aide --check
-000303 - grep aide /etc/crontab , 05 4 * * * root /usr/sbin/aide --check
-000304 - 05 4 * * * root /usr/sbin/aide --check
-000305 - 05 4 * * * root /usr/sbin/aide --check
-000306 - 05 4 * * * root /usr/sbin/aide --check
-000307 - 05 4 * * * root /usr/sbin/aide --check
-000308 - grep core /etc/security/limits.conf , hard core 0
-000309 - if NFS, grep insecure_locks /etc/exports 
-000313 - /etc/audit/auditd.conf , action_mail_acct = root
-000319 - grep "maxlogins" /etc/security/limits.conf , hard maxlogins 10
-000320 - grep ":FORWARD" /etc/sysconfig/iptables , looking for unless allow deny
-000321 - rpm -q openswan , yum install openswan
-000324 - gconftool-2 -g /apps/gdm/simple-greeter/banner_message_enable
-000326 - gconftool-2 -g /apps/gdm/simple-greeter/banner_message_text , Banner tags
-000335 - grep "INACTIVE" /etc/default/useradd , INACTIVE=35
-000336 - find / -xdev -type d -perm 002 ! -perm 1000
-000337 - find [PART] -xdev -type d -perm 0002 -uid +500 -print
-000338 - grep "server_args" /etc/xinetd.d/tftp , grep "server_args" /etc/xinetd.d/tftp , server_args = -s /var/lib/tftpboot
-000339 - if vsftpd, grep vsftpd /etc/xinetd.d/* , grep xferlog_enable [vsftpd config file]
-000340 - if snmpd,  grep 'v1\|v2c\|com2sec' /etc/snmp/snmpd.conf | grep -v '^#'
-000341 - if snmpd, grep -v "^#" /etc/snmp/snmpd.conf| grep public
-000342 - grep "umask" /etc/bashrc
-000343 - grep "umask" /etc/csh.cshrc
-000344 - grep "umask" /etc/profile
-000345 - grep -i "umask" /etc/login.defs
-000346 - grep umask /etc/init.d/functions
-000347 - find /home -xdev -name .netrc ,
-000348 - if vsftpd , banner_file=/etc/issue
-000349 - Interview the SA to determine if all accounts not exempted by policy are using CAC authentication.
-000356 - grep pam_faillock /etc/pam.d/system-auth-ac , fail_interval=900
-000383 - grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c %a:%n, chmod 0640 [audit_file]
-000384 - grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c  %U:%n , chown root [audit_file]
-000385 - grep "^log_file" /etc/audit/auditd.conf|sed 's/^[^/]*//; s/[^/]*$//'|xargs stat -c %a:%n , chmod go-w [audit_directory]
-000519 - check if package hases are different fro what is expected by the rpm db , and reinstall (interactive?)
-000521 - postconf alias_map , Set up an alias for root that forwards to a monitored email address (interactive)
-000523 - if ipv6, grep ":INPUT" /etc/sysconfig/ip6tables for unless allow/deny
-000524 - interview for automated system managing user accounts 
-000527 - The login user list must be disabled.
+000271 - high, INCOMPLETE, grep noexec /etc/fstab on removable media
+000272 - low, INCOMPLETE, grep signing /etc/samba/smb.conf , client signing = mandatory
+000273 - low, INCOMPLETE, grep sec /etc/fstab , should show either "krb5i" or "ntlmv2i" if samba mounts are in use
+000274 - low, INCOMPLETE, grep remember /etc/pam.d/system-auth , remember=24 , Do not allow users to reuse recent passwords.
+	system-auth function?
+000275 - low, SKIP, filesystem encryption test, could only be done through a kickstart
+000276 - low, SKIP, filesystem encryption test, could only be done through a kickstart
+000277 - low, SKIP, filesystem encryption test, could only be done through a kickstart
+000278 - INCOMPLETE, checking audit permissions, rpm -V audit | grep '^.M' 
+	rpm --setperms audit
+000279 - INCOMPLETE, rpm -V audit | grep '^.....U' , rpm --setugids audit
+	rpm --setugids audit
+000280 - INCOMPLETE, rpm -V audit | grep '^......G' , rpm --setugids audit
+000281 - INCOMPLETE, rpm -V audit | grep '$1 ~ /..5/ && $2 != "c"' , rpm -V audit | grep '^..5'
+000282 - low, INCOMPLETE, find / -xdev -type f -perm -002 , find world-writable files
+000284 - INCOMPLETE,grep uvscan /etc/cron* /var/spool/cron/* , and check the dates on the definitions (this is a check only test)
+	replace with clamav
+000285 - INCOMPLETE, bah. This is a lame attempt to say selinux is a HIDS
+	replace with ossec
+000287 - output, install service function?
+000288 - output, remove service function, buggy
+000289 - output, disable service function, buggy
+000290 - low/skip, INCOMPLETE, sets runlevel to 3. Need desktop/profile support
+000291 - low/skip, INCOMPLETE, rpm -qi xorg-x11-server-common , should not be installed
+000292 - INCOMPLETE, /etc/sysconfig/network-scripts/ifcg to make sure dhcp is not in use
+000294 - INCOMPLETE, pwck -rq, check the gids against the group & passwd files
+000296 - INCOMPLETE, pwck -rq, check for duplicate account names
+000297 - skip, INCOMPLETE, chage -l <user>, Verify each of temp accounts has an expiration date set as documented.
+000298 - skip, INCOMPLETE, chage -l [USER] , verify each emergency account has an expiration date set as documented.
+000299 - INCOMPLETE, grep pam_cracklib /etc/pam.d/system-auth , # password required pam_cracklib.so maxrepeat=3
+	system-auth function?
+000302 - INCOMPLETE, AIDE is in cron, grep aide /etc/crontab , 05 4 * * * root /usr/sbin/aide --check
+	/etc/aqueduct/profile? ossec or aide config
+000303 - INCOMPLETE, grep aide /etc/crontab , 05 4 * * * root /usr/sbin/aide --check
+	/etc/aqueduct/profile? ossec or aide config
+000304 - INCOMPLETE, 05 4 * * * root /usr/sbin/aide --check
+	/etc/aqueduct/profile? ossec or aide config
+000305 - INCOMPLETE, 05 4 * * * root /usr/sbin/aide --check
+	/etc/aqueduct/profile? ossec or aide config
+000306 - INCOMPLETE, 05 4 * * * root /usr/sbin/aide --check
+	/etc/aqueduct/profile? ossec or aide config
+000307 - INCOMPLETE, 05 4 * * * root /usr/sbin/aide --check
+	/etc/aqueduct/profile? ossec or aide config
+000308 - INCOMPLETE, grep core /etc/security/limits.conf , hard core 0
+000309 - skip/INCOMPLETE if NFS, grep insecure_locks /etc/exports 
+000313 - output
+000315 - Buggy
+	modproble function
+000319 - output, Buggy, grep "maxlogins" /etc/security/limits.conf , hard maxlogins 10
+000320 - INCOMPLETE, hard, grep ":FORWARD" /etc/sysconfig/iptables , looking for unless allow deny
+000321 - skip/INCOMPLETE rpm -q openswan , yum install openswan
+000324 - output (DESKTOP)
+000326 - output (DESKTOP), path to banner file (probably bring in through $var)
+000331 - Buggy, output
+000334 - Buggy, output
+000335 - output
+000336 - INCOMPLETE, find / -xdev -type d -perm 002 ! -perm 1000
+000337 - INCOMPLETE, find [PART] -xdev -type d -perm 0002 -uid +500 -print
+000338 - skip/INCOMPLETE grep "server_args" /etc/xinetd.d/tftp , grep "server_args" /etc/xinetd.d/tftp , server_args = -s /var/lib/tftpboot
+000339 - skip/INCOMPLETE if vsftpd, grep vsftpd /etc/xinetd.d/* , grep xferlog_enable [vsftpd config file]
+000340 - skip/INCOMPLETE if snmpd,  grep 'v1\|v2c\|com2sec' /etc/snmp/snmpd.conf | grep -v '^#'
+000341 - skip/INCOMPLETE if snmpd, grep -v "^#" /etc/snmp/snmpd.conf| grep public
+000342 - INCOMPLETE, grep "umask" /etc/bashrc
+	might need an advanced function here
+000343 - INCOMPLETE, grep "umask" /etc/csh.cshrc
+000344 - INCOMPLETE, grep "umask" /etc/profile
+000345 - INCOMPLETE, grep -i "umask" /etc/login.defs
+000346 - INCOMPLETE, grep umask /etc/init.d/functions
+000347 - INCOMPLETE, find /home -xdev -name .netrc ,
+000348 - skip/INCOMPLETE if vsftpd , banner_file=/etc/issue
+000349 - skip Interview the SA to determine if all accounts not exempted by policy are using CAC authentication.
+000356 - INCOMPLETE grep pam_faillock /etc/pam.d/system-auth-ac , fail_interval=900
+	system-auth function
+000383 - INCOMPLETE grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c %a:%n, chmod 0640 [audit_file]
+	auditd function
+000384 - INCOMPLETE grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c  %U:%n , chown root [audit_file]
+	auditd function
+000385 - INCOMPLETE grep "^log_file" /etc/audit/auditd.conf|sed 's/^[^/]*//; s/[^/]*$//'|xargs stat -c %a:%n , chmod go-w [audit_directory]
+	auditd function
+000503 - output
+	modprobe function
+000504 - skip / INTERVIEW
+000505 - skip / INTERVIEW
+000506 - output, search & destroy hushlogins
+000507 - output, buggy, ssh
+000509 - output, audispd (auditd forwarder)
+000510 - output, auditd function?
+000511 - output, auditd
+000514 - INCOMPLETE, rpm sig validation checks
+000515 - skip / INCOMPLETE, nfs only all_squash /etc/exports
+000516 - output, rpm restores ownership settings
+000517 - output, rpm restores group ownership settings
+000518 - output, rpm restores perms
+000519 - skip/INCOMPLETE check if package hases are different fro what is expected by the rpm db , and reinstall (interactive?)
+000521 - skip/INCOMPLETE manual only, postconf alias_map , Set up an alias for root that forwards to a monitored email address (interactive)
+000522 - output, buggy group perms check for audit logs
+000523 - skip/INCOMPLETE, if ipv6, grep ":INPUT" /etc/sysconfig/ip6tables for unless allow/deny
+000524 - skip, INTERVIEW, interview for automated system managing user accounts 
+000525 - output, grub checks to ut audit= in
+000526 - output, service stop autofs. DOes this even exist?
+000527 - INCOMPLETE,
+	Desktop function
