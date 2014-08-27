@@ -1,136 +1,231 @@
-000009 - need output
-000017 - check for selinux=0 
-000018 - AIDE - A file integrity baseline must be created.
-000020 - SELINUX=enforcing
-000023 - SELINUXTYPE=targeted
-000025 - Check: ls -RZ /dev | grep unlabeled_t , 
+000029 - needs output work
+000045 - output, file crawler for perms, function?
+000046 - output, file crawler for perms, function?
+000047 - output, file crawler for perms, function?
+000048 - output, file crawler for perms, function?
+000050 - output, set PASS_MIN_LEN in /etc/aqueduct/profile?
+	function check for variable range
+000051 - output, set PASS_MIN_DAYS in /etc/aqueduct/profile?
+	function check for variable range
+000052 - output, set PASS_MAX_DAYS in /etc/aqueduct/profile?
+	function check for variable range
+000054 - output, set PASS_WARN_AGE in /etc/aqueduct/profile
+	function check for variable range
+000056 - output, PAM, enable pam_cracklib dcredit
+000057 - output, PAM, enable pam_cracklib ucredit
+000058 - output, PAM, enable pam_cracklib ocredit
+000059 - output, PAM, enable pam_cracklib lcredit
+000060 - output, PAM, enable pam_cracklib difok
 000061 - need add_after function
 	system-auth-ac, changes dont work
+	nispom uses tally, so this is OK
 000062 - need add_after function
 	grep sha512 /etc/pam.d/system-auth, what was the command in ASL?
+	authconfig --test |grep hashing
+	authconfig --passalgo=sha512 --update
+000063 - /etc/login.defs, set ENCRYPT_METHOD
+        authconfig --passalgo=sha512 --update
 000064 - set crypt_style = sha512 
 	grep sha512 /etc/libuser, what was the command in ASL?
+	authconfig --passalgo=sha512 --update
 000068 - set grub boot password (interactive)
-000073 - needs banner select option
-000091 - set net.ipv4.conf.default.accept_redirects = 0
-000092 - set net.ipv4.icmp_echo_ignore_broadcasts = 1
-000093 - net.ipv4.icmp_ignore_bogus_error_responses = 1
-000095 - net.ipv4.tcp_syncookies = 1
-000103 - chkconfig ip6tables on, need to see if the system is valid ipv6
+000069 - output, force auth for single user. Two step fix, verify_setting maybe?
+000070 - output, /etc/sysconfig/init, turn off prompt
+000071 - output, installs screen
+000073 - output, needs banner select option
+	BANNER=/path/to/banner in /etc/aqueduct/profile?
+000078 - output, sets kernel.randomize_va_space=2 
+	clean up sysctl function
+000079 - output, sets kernel.exec-shield
+	clean up sysctl function
+000080 - output, net.ipv4.conf.default.send_redirects=0
+	clean up sysctl function
+000081 - output, net.ipv4.conf.all.send_redirects=0
+	clean up sysctl function
+000082 - output net.ipv4.ip_forward=0
+	sysctl function
+000083 - output net.ipv4.conf.all.accept_source_route=0
+	sysctl function
+000084 - net.ipv4.conf.all.accept_redirects=0
+	sysctl function
+000086 - net.ipv4.conf.all.secure_redirects=0
+	sysctl function
+000088 - net.ipv4.conf.all.log_martians=1
+	sysctl function
+000089 - net.ipv4.conf.default.accept_source_route=0
+	sysctl function
+000090 - net.ipv4.conf.default.secure_redirects=0
+	sysctl function
+000091 - good base for sysctl function, I already roughed it out
+000092 - good base for sysctl function, I already roughed it out
+000093 - good base for sysctl function, I already roughed it out
+000095 - good base for sysctl function, I already roughed it out
+000096 - good base for sysctl function, I already roughed it out
+000097 - net.ipv4.conf.default.rp_filter
+	sysctl function
+000098 - low, output, IPV6 global in /etc/aqueduct
+	need modprobe function
+000099 - low, IPV6, net.ipv6.conf.default.accept_redirects=0
+	sysctl function
+000103 - low, IPV6, chkconfig ip6tables on, need to see if the system is valid ipv6
 000106 - same as above
 000107 - same as above
-000113 - chkconfig iptables on 
-000116 - same as above
-000117 - same as above
-000120 -  /etc/sysconfig/iptables <- eval this for unless allow/ deny
+000120 - advanced, output, /etc/sysconfig/iptables <- eval this for unless allow/ deny
 	this will take more work to generate an unless allow/deny policy
-000126 - grep -r rds /etc/modprobe.conf /etc/modprobe.d , add to modprobe:  install rds /bin/true
-	come back to this one
-000148 - chkconfig auditd on
-000154 - chkconfig auditd on / service auditd start
-000159 - /etc/audit/auditd.conf , num_logs = 5
-	eval for 5 or higher, or 2 or lower
-000160 - /etc/audit/auditd.conf ,  max_log_file = 6
-	eval for 6 or higher
-000161 - /etc/audit/auditd.conf , set ACTION]" to "rotate"
-000165 -  auditctl -l | grep syscall | grep adjtimex , /etc/audit/audit.rules audit_time_rules  -a always,exit -F arch=b64 -S adjtimex -k audit_time_rules
-000167 - auditctl -l | grep syscall | grep settimeofday , /etc/audit/audit.rules , audit_time_rules -a always,exit -F arch=b64 -S settimeofday -k audit_time_rules
-	mutliline
-000169 - auditctl -l | grep syscall | grep stime , /etc/audit/audit.rules , -a always,exit -F arch=b64 -S adjtimex -S settimeofday -S clock_settime -k audit_time_rules
+000124 - output
+	 modprobe function
+000125 - output
+	 modprobe function
+000126 - INCOMPLETE, grep -r rds /etc/modprobe.conf /etc/modprobe.d , add to modprobe:  install rds /bin/true
+	NEED modprobe function
+000127 - output
+	modprobe function
+000133 - output
+	multi file user ownership function here. Probably just a loop
+000134 - output
+	multi file group ownership function, probably just a loop
+000135 - output
+	multi file perms function, loop
+000136 - INCOMPLETE, remote syslog requirement. Probably out of scope. Check only?
+000137 - INCOMPLETE,  same as 000136
+000138 - INCOMPLETE, install logrotate
+	maybe yum install function?
+
+000145 - output, 
+	is service installed/running/in startup function?
+000148 - output
+	is service installed/running/in startup function?
+000154 - output
+	is service installed/running/in startup function?
+000159 - INCOMPLETE, /etc/audit/auditd.conf , num_logs = 5
+	function eval for 5 or higher, or 2 or lower
+000160 - INCOMPLETE, /etc/audit/auditd.conf ,  max_log_file = 6
+	function eval for 6 or higher
+000161 - output, /etc/audit/auditd.conf 
+000165 -  INCOMPLETE, auditctl -l | grep syscall | grep adjtimex , /etc/audit/audit.rules audit_time_rules  -a always,exit -F arch=b64 -S adjtimex -k audit_time_rules
+	function audit.rules
+000167 - INCOMPLETE, auditctl -l | grep syscall | grep settimeofday , /etc/audit/audit.rules , audit_time_rules -a always,exit -F arch=b64 -S settimeofday -k audit_time_rules
+	function audit.rules
+000169 - INCOMPLETE, auditctl -l | grep syscall | grep stime , /etc/audit/audit.rules , -a always,exit -F arch=b64 -S adjtimex -S settimeofday -S clock_settime -k audit_time_rules
+	function audit.rules
+000171 - INCOMPLETE, auditctl -l | grep syscall | grep clock_settime , /etc/audit/audit.rules , audit_time_rules -a always,exit -F arch=b64 -S adjtimex -S settimeofday -S clock_settime 
+	function audit.rules
 	multiline
-000171 - auditctl -l | grep syscall | grep clock_settime , /etc/audit/audit.rules , audit_time_rules -a always,exit -F arch=b64 -S adjtimex -S settimeofday -S clock_settime 
-	multiline
-000173 - auditctl -l | grep "watch=/etc/localtime"
+000173 - INCOMPLETE, auditctl -l | grep "watch=/etc/localtime"
 	need function to test & add multiple audit log lines
-000174 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000174 - INCOMPLETE, auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
 	need function to test & add multiple audit log lines
-000175 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000175 - INCOMPLETE, auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
 	need function to test & add multiple audit log lines
-000176 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000176 - INCOMPLETE, auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
 	need function to test & add multiple audit log lines
-000177 - auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
+000177 - INCOMPLETE, auditctl -l | egrep '(/etc/passwd|/etc/shadow|/etc/group|/etc/gshadow|/etc/security/opasswd)'
 	need function to test & add multiple audit log lines
-000182 - auditctl -l | egrep '(sethostname|setdomainname|/etc/issue|/etc/issue.net|/etc/hosts|/etc/sysconfig/network)'
+000182 - INCOMPLETE, auditctl -l | egrep '(sethostname|setdomainname|/etc/issue|/etc/issue.net|/etc/hosts|/etc/sysconfig/network)'
 	need function to test & add multiple audit log lines
-000183 - auditctl -l | grep "dir=/etc/selinux"
+000183 - INCOMPLETE, auditctl -l | grep "dir=/etc/selinux"
 	need function to test & add multiple audit log lines
-000184 - auditctl -l | grep syscall | grep chmod
+000184 - INCOMPLETE, auditctl -l | grep syscall | grep chmod
 	need function to test & add multiple audit log lines
-000185 - auditctl -l | grep syscall | grep chown
+000185 - INCOMPLETE, auditctl -l | grep syscall | grep chown
 	need function to test & add multiple audit log lines
-000186 - auditctl -l | grep syscall | grep fchmod
+000186 - INCOMPLETE, auditctl -l | grep syscall | grep fchmod
 	need function to test & add multiple audit log lines
-000187 - auditctl -l | grep syscall | grep fchmodat
+000187 - INCOMPLETE, auditctl -l | grep syscall | grep fchmodat
 	need function to test & add multiple audit log lines
-000188 - auditctl -l | grep syscall | grep fchown
+000188 - INCOMPLETE, auditctl -l | grep syscall | grep fchown
 	need function to test & add multiple audit log lines
-000189 - auditctl -l | grep syscall | grep fchownat
+000189 - INCOMPLETE, auditctl -l | grep syscall | grep fchownat
 	need function to test & add multiple audit log lines
-000190 - auditctl -l | grep syscall | grep fremovexattr
+000190 - INCOMPLETE, auditctl -l | grep syscall | grep fremovexattr
 	need function to test & add multiple audit log lines
-000191 - auditctl -l | grep syscall | grep fsetxattr
+000191 - INCOMPLETE, auditctl -l | grep syscall | grep fsetxattr
 	need function to test & add multiple audit log lines
-000192 - auditctl -l | grep syscall | grep lchown
+000192 - INCOMPLETE, auditctl -l | grep syscall | grep lchown
 	need function to test & add multiple audit log lines
-000193 - auditctl -l | grep syscall | grep lremovexattr
+000193 - INCOMPLETE, auditctl -l | grep syscall | grep lremovexattr
 	need function to test & add multiple audit log lines
-000194 - auditctl -l | grep syscall | grep lsetxattr
+000194 - INCOMPLETE, auditctl -l | grep syscall | grep lsetxattr
 	need function to test & add multiple audit log lines
-000195 - auditctl -l | grep syscall | grep removexattr
+000195 - INCOMPLETE, auditctl -l | grep syscall | grep removexattr
 	need function to test & add multiple audit log lines
-000196 - auditctl -l | grep syscall | grep setxattr
+000196 - INCOMPLETE, auditctl -l | grep syscall | grep setxattr
 	need function to test & add multiple audit log lines
-000197 - grep EACCES /etc/audit/audit.rules | grep EPERM /etc/audit/audit.rules
+000197 - INCOMPLETE, grep EACCES /etc/audit/audit.rules | grep EPERM /etc/audit/audit.rules
 	need function to test & add multiple audit log lines
-000198 - find / -xdev -type f -perm -4000 -o -perm -2000 2>/dev/null , grep path /etc/audit/audit.rules 
+000198 - INCOMPLETE, find / -xdev -type f -perm -4000 -o -perm -2000 2>/dev/null , grep path /etc/audit/audit.rules 
 	need function to test & add multiple audit log lines
-000199 - auditctl -l | grep syscall | grep mount
+000199 - INCOMPLETE, auditctl -l | grep syscall | grep mount
 	need function to test & add multiple audit log lines
-000200 - auditctl -l | grep syscall | grep unlink | grep -v unlinkat (and abunch of other checks)
+000200 - INCOMPLETE, auditctl -l | grep syscall | grep unlink | grep -v unlinkat (and abunch of other checks)
 	need function to test & add multiple audit log lines
-000201 - auditctl -l | grep "watch=/etc/sudoers"
+000201 - INCOMPLETE, auditctl -l | grep "watch=/etc/sudoers"
 	need function to test & add multiple audit log lines
-000211 - service telnet status , chkconfig telnet off
+000202 - auditctl, not incomplete, its doing some maniuplation of audit.rules. output
+000203 - output
+000204 - output
+	remove package function?
+000205 - output
+	remove package function?
+000206 - output
+000211 - output
 	a remove service function?
-000213 - rpm -q rsh-server , yum erase rsh-server
-000214 - chkconfig "rsh" --list "rsh" 0:off 1:off 2:off 3:off 4:off 5:off 6:off, chkconfig rsh off
-000216 - chkconfig "rexec" --list "rexec" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
-000218 - chkconfig "rlogin" --list "rlogin" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
-000220 - rpm -q ypserv , yum erase ypserv
-000221 - chkconfig "ypbind" --list "ypbind" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
-000222 - rpm -q tftp-server , yum erase tftp-server
-000223 - chkconfig "tftp" --list "tftp" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
-000224 - ervice crond status, chkconfig crond on
-000227 - SSH: sshd set to protocol 2
-	
-000230 - SSH: ClientAliveInterval 900
-000231 - SSH: ClientAliveCountMax 0
-000234 - SSH: IgnoreRhosts yes
-000236 - SSH: HostbasedAuthentication no
-000237 - SSH: PermitRootLogin no
-000241 - SSH: PermitUserEnvironment no
-000246 - chkconfig "avahi-daemon" --list "avahi-daemon" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
-000249 - if postfix is installed, /etc/postfix/main.cf inet_interfaces = localhost
-	
-000252 - grep start_tls /etc/pam_ldap.conf
-	not used here, so triage for last
-000253 - grep cert /etc/pam_ldap.conf , tls_cacertfile /etc/pki/tls/CA/cacert.pem or  tls_cacertdir /etc/pki/tls/CA
-	not used here, so triage for last
-000256 - rpm -q openldap-servers , yum erase openldap-servers
-	not used here, so triage for last
-000257 - gconftool-2 -g /apps/gnome-screensaver/idle_delay , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type int --set /apps/gnome-screensaver/idle_delay 15
+000213 - output
+	a remove service function?
+000214 - output
+	a remove service function?
+000216 -output
+	a remove service function?
+000218 -output
+	a remove service function?
+000220 - output
+	remove service function
+000221 - output
+	remove service function
+000222 - output
+	remove service function
+000223 - output
+	remove service function
+000224 - output
+	is service installed & running function
+000227 - output
+000230 - output
+000231 - output
+000234 - output
+000236 - output
+000237 - output
+000239 - output, and buggy?
+000240 - output
+000241 - output
+000243 - output
+000246 - output
+	remove service function
+000247 - output (ntpd)
+	install & start service function
+000248 - output (ntpd), and add ntp servers? Perhaps from /etc/aqueduct/profile?
+000249 - output
+000252 - low, INCOMPLETE, grep start_tls /etc/pam_ldap.conf
+000253 - low, INCOMPLETE, grep cert /etc/pam_ldap.conf , tls_cacertfile /etc/pki/tls/CA/cacert.pem or  tls_cacertdir /etc/pki/tls/CA
+000256 - INCOMPLETE, rpm -q openldap-servers , yum erase openldap-servers, Perhaps from /etc/aqueduct/profile?
+000257 - INCOMPLETE, gconftool-2 -g /apps/gnome-screensaver/idle_delay , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type int --set /apps/gnome-screensaver/idle_delay 15
+	Desktop detection & function
+000258 - Buggy, attempt at a gconftool function here
+000259 - INCOMPLETE, gconftool-2 -g /apps/gnome-screensaver/lock_enabled , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory  --type bool --set /apps/gnome-screensaver/lock_enabled true
 	Desktop detection
-000259 - gconftool-2 -g /apps/gnome-screensaver/lock_enabled , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory  --type bool --set /apps/gnome-screensaver/lock_enabled true
+000260 - INCOMPLETE, gconftool-2 -g /apps/gnome-screensaver/mode , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type string --set /apps/gnome-screensaver/mode blank-only
 	Desktop detection
-000260 - gconftool-2 -g /apps/gnome-screensaver/mode , gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type string --set /apps/gnome-screensaver/mode blank-only
-	Desktop detection
-000261 - chkconfig "abrtd" --list "abrtd" 0:off 1:off 2:off 3:off 4:off 5:off 6:off , chkconfig abrtd off
-000262 - chkconfig atd off
-000266 - chkconfig "oddjobd" --list "oddjobd" 0:off 1:off 2:off 3:off 4:off 5:off 6:off
-000267 - chkconfig "qpidd" --list "qpidd" 0:off 1:off 2:off 3:off 4:off 5:off 6:off , chkconfig qpidd off
-000268 - chkconfig "rdisc" --list "rdisc" 0:off 1:off 2:off 3:off 4:off 5:off 6:off , chkconfig rdisc off
-000269 - mount | grep nfs , then it needs nodev
-000270 - mount | grep nfs ,  then it needs nosuid
+000261 - output
+	service remove function
+000262 - output
+	service remove function
+000265 - low, INCOMPLETE, turn off ntpdate (but not remove)
+000266 - output
+	service remove function
+000267 - output
+	service remove function
+000268 - low, INCOMPLETE, turn off rdisk (but not remove)
+000269 - low, INCOMPLETE, mount | grep nfs , then it needs nodev
+000270 - low, INCOMPLETE, mount | grep nfs ,  then it needs nosuid
 000271 - grep noexec /etc/fstab on removable media
 000272 - grep signing /etc/samba/smb.conf , client signing = mandatory
 000273 - grep sec /etc/fstab , should show either "krb5i" or "ntlmv2i" if samba mounts are in use
