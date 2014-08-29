@@ -2,4 +2,4 @@
 # CCE-14089-7
 # CCE-26340-0
 
-echo "install cramfs /bin/false" &gt; /etc/modprobe.d/cramfs.conf
+echo "install cramfs /bin/false" > /etc/modprobe.d/cramfs.conf
