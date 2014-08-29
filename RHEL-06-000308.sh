@@ -68,5 +68,6 @@ PDI=RHEL-06-000308
 #BEGIN_CHECK
 #END_CHECK
 #BEGIN_REMEDY
+echo "*     hard   core    0" >> /etc/security/limits.conf
 #END_REMEDY
 
