@@ -62,6 +62,8 @@ PDI=RHEL-06-000040
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+MOD_MSG="/etc/passwd group root ownership"
 if [ -a "/etc/passwd" ]
 then
     CURGOWN=`stat -c %G /etc/passwd`;
@@ -73,6 +75,9 @@ then
 #END_CHECK
 #BEGIN_REMEDY
     chgrp root /etc/passwd
+	show_message $PDI "$MOD_MSG" fixed
+else
+	show_message $PDI "$MOD_MSG" pass
 fi
 
 #END_REMEDY

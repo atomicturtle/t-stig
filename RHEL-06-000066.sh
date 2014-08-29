@@ -63,18 +63,11 @@
 PDI=RHEL-06-000066
 #
 #BEGIN_CHECK
-
-GROUP=`ls -lL /etc/grub.conf | awk '{ print $4}'`
-FILE=`ls -l /etc/grub.conf | awk '{ print $NF}'`
-FILE=/etc/$FILE
-
-#END_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/grub.conf
+MOD_MSG="$PKG_CONFIG root group ownership"
 #BEGIN_REMEDY
-
-if [ "$OWNER" != "root" ]
-then
-    chgrp root $FILE
-fi
+check_group root $PKG_CONFIG $PDI "$MOD_MSG"
 
 #END_REMEDY
 

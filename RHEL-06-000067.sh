@@ -62,21 +62,12 @@
 PDI=RHEL-06-000067
 #
 #BEGIN_CHECK
-
-FILE=`ls -l /etc/grub.conf | awk '{ print $NF}'`
-FILE=/etc/$FILE
-ls -l $FILE | grep '^-rw-------' > /dev/null
-
-#END_CHECK
-#BEGIN_REMEDY
-
-if [ $? -ne 0 ]
-then
-    chmod 0600 $FILE
-fi
-
+. ./aqueduct_functions
+PKG_CONFIG=/etc/grub.conf
+MOD_MSG="$PKG_CONFIG 0600 permissions"
 
 #END_CHECK
 #BEGIN_REMEDY
+check_perms 0600 $PKG_CONFIG $PDI "$MOD_MSG"
 #END_REMEDY
 

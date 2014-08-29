@@ -62,18 +62,11 @@
 PDI=RHEL-06-000065
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG=/etc/grub.conf
+MOD_MSG="$PKG_CONFIG root ownership"
 
-OWNER=`ls -lL /etc/grub.conf | awk '{ print $3}'`
-FILE=`ls -l /etc/grub.conf | awk '{ print $NF}'`
-FILE=/etc/$FILE
-
-#END_CHECK
-#BEGIN_REMEDY
-
-if [ "$OWNER" != "root" ]
-then
-    chown root $FILE
-fi
+check_owner root $PKG_CONFIG $PDI "$MOD_MSG"
 
 
 #END_REMEDY

@@ -61,10 +61,15 @@ PDI=RHEL-06-000043
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG="/etc/group"
+MOD_MSG="$PKG_CONFIG group root ownership"
 #END_CHECK
 #BEGIN_REMEDY
 
-chgrp root /etc/group
+#chgrp root /etc/group
+check_group root $PKG_CONFIG $PDI "$MOD_MSG"
+
 
 #END_REMEDY
 

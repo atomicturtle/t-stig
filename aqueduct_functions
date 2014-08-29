@@ -307,6 +307,77 @@ function verify_setting {
   fi
 }
 
+# check_owner <user> <path> <pdi> <mod_msg>
+function check_owner {
+        owner=$1
+        filename=$2
+        PDI=$3
+        MOD_MSG=$4
+
+        CUROWN=`stat -c %U $filename`
+        if [ "$CUROWN" != "$owner" ];then
+                chown $owner $filename
+                show_message $PDI "$MOD_MSG" fixed
+        else
+                show_message $PDI "$MOD_MSG" pass
+
+        fi
+
+}
+
+# check_group <user> <path> <pdi> <mod_msg>
+function check_group {
+        owner=$1
+        filename=$2
+        PDI=$3
+        MOD_MSG=$4
+
+        CUROWN=`stat -c %G $filename`
+        if [ "$CUROWN" != "$owner" ];then
+                chgrp $owner $filename
+                show_message $PDI "$MOD_MSG" fixed
+        else
+                show_message $PDI "$MOD_MSG" pass
+
+        fi
+
+}
+
+# check_perms <mode> <path> <pdi> <mod_msg>
+function check_perms {
+        mode=$1
+        filename=$2
+        PDI=$3
+        MOD_MSG=$4
+
+        if [ -e $filename ]; then
+                FILEPERMS=`stat -L --format='%04a' $filename`
+
+                FILESPECIAL=${FILEPERMS:0:1}
+                FILEOWNER=${FILEPERMS:1:1}
+                FILEGROUP=${FILEPERMS:2:1}
+                FILEOTHER=${FILEPERMS:3:1}
+        fi
+
+        FIELD1=`echo $mode | awk '{printf "%s",substr($1,1,1)}'`
+        FIELD2=`echo $mode | awk '{printf "%s",substr($1,2,1)}'`
+        FIELD3=`echo $mode | awk '{printf "%s",substr($1,3,1)}'`
+        FIELD4=`echo $mode | awk '{printf "%s",substr($1,4,1)}'`
+
+        if [ $(($FILESPECIAL&7)) != "$FIELD1" ] || [ $(($FILEOWNER&7)) != "$FIELD2" ] || [ $(($FILEGROUP&7)) != "$FIELD3" ] || [ $(($FILEOTHER&7)) != "$FIELD4" ]; then
+                chmod $mode $filename
+                show_message $PDI "$MOD_MSG" fixed
+        else
+                show_message $PDI "$MOD_MSG" pass
+
+        fi
+
+}
+
+
+
+
+
 # gconf_setting
 #gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type int --set /apps/gnome-screensaver/idle_delay 15
 #gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type bool --set /apps/gnome-screensaver/idle_activation_enabled true

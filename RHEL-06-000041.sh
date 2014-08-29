@@ -62,10 +62,31 @@ PDI=RHEL-06-000041
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG="/etc/passwd"
+MOD_MSG="/etc/passwd permissions 0000"
+if [ -a $PKG_CONFIG ]; then
+	FILEPERMS=`stat -L --format='%04a' $PKG_CONFIG`
+	# Break the actual file octal permissions up per entity
+    	FILESPECIAL=${FILEPERMS:0:1}
+    	FILEOWNER=${FILEPERMS:1:1}
+    	FILEGROUP=${FILEPERMS:2:1}
+    	FILEOTHER=${FILEPERMS:3:1}
+
+	# Run check by 'and'ing the unwanted mask(7777)
+    	if [ $(($FILESPECIAL&7)) != "0" ] || [ $(($FILEOWNER&7)) != "6" ] || [ $(($FILEGROUP&7)) != "4" ] || [ $(($FILEOTHER&7)) != "4" ]; then
 #END_CHECK
 #BEGIN_REMEDY
+		chmod 0644 $PKG_CONFIG
+		show_message $PDI "$MOD_MSG" fixed
+	else
+		show_message $PDI "$MOD_MSG" pass
+	fi
+fi
 
-chmod 0644 /etc/passwd
+
+
+
 
 #END_REMEDY
 

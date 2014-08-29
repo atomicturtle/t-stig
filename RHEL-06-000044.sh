@@ -61,10 +61,14 @@ PDI=RHEL-06-000044
 SEVERITY=medium
 #
 #BEGIN_CHECK
+. ./aqueduct_functions
+PKG_CONFIG="/etc/group"
+MOD_MSG="$PKG_CONFIG 0644 permissions"
 #END_CHECK
 #BEGIN_REMEDY
 
-chmod 644 /etc/group
+check_perms 0644 $PKG_CONFIG $PDI "$MOD_MSG"
+#chmod 644 /etc/group
 
 #END_REMEDY
 

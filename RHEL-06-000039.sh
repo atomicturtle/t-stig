@@ -63,7 +63,7 @@ SEVERITY=medium
 #
 #BEGIN_CHECK
 . ./aqueduct_functions
-MOD_MSG="/etc/passwd root ownership
+MOD_MSG="/etc/passwd root ownership"
 if [ -a "/etc/passwd" ]
 then
     CUROWN=`stat -c %U /etc/passwd`;
