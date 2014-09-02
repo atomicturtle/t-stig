@@ -69,5 +69,7 @@ PDI=RHEL-06-000274
 #BEGIN_CHECK
 #END_CHECK
 #BEGIN_REMEDY
+sed -i 's/^password.*sufficient.*/password    sufficient    pam_unix.so sha512 shadow try_first_pass use_authtok remember=24/'  /etc/pam.d/system-auth
+
 #END_REMEDY
 
