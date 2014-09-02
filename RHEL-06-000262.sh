@@ -85,9 +85,10 @@ PDI=RHEL-06-000262
 #BEGIN_CHECK
 . ./aqueduct_functions
 is_chkconfig_on atd
+echo $?
 #END_CHECK
 #BEGIN_REMEDY
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
 	set_chkconfig_off atd
 fi
 
