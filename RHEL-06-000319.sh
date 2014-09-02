@@ -76,7 +76,7 @@ PKG_CONFIG=/etc/security/limits.conf
 if ! grep -q  "hard maxlogin 10" $PKG_CONFIG ; then
 #END_CHECK
 #BEGIN_REMEDY
-	edit_file $PKG_CONFIG $PDI 'hard maxlogin 10' 'hard maxlogin'
+	edit_file $PKG_CONFIG $PDI '* hard maxlogin 10' 'hard maxlogin'
 fi
 #END_REMEDY
 
