@@ -62,12 +62,13 @@ PDI=RHEL-06-000522
 SEVERITY=medium
 #
 #BEGIN_CHECK
-AUDITFILEPERMS=$(grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c %G:%n|cut -d ":" -f 1|grep -i root|wc -l)
-if [ $AUDITFILEPERMS != "1" ]
-  then
+#AUDITFILEPERMS=$(grep "^log_file" /etc/audit/auditd.conf|sed s/^[^\/]*//|xargs stat -c %G:%n|cut -d ":" -f 1|grep -i root|wc -l)
+#if [ $AUDITFILEPERMS != "1" ]; then
 #END_CHECK
 #BEGIN_REMEDY
-  chgrp root $AUDITFILEPERMS
-done
+	for filename in `grep "^log_file" /etc/audit/auditd.conf| awk -F = '{print $2}'`; do
+  		chgrp root $filename
+	done
+#fi
 #END_REMEDY
 

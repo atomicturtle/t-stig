@@ -70,22 +70,28 @@
 PDI=RHEL-06-000083
 #
 #BEGIN_CHECK
-
-I4CAAS=` sysctl net.ipv4.conf.all.accept_source_route | awk '{ print $NF}'`
-
+. ./aqueduct_functions
+KERNEL_VAR=`sysctl  net.ipv4.conf.all.accept_source_route | awk '{ print $NF }'`
 #END_CHECK
 #BEGIN_REMEDY
 
-if [ $I4CAAS -ne 0 ]
-then
-    grep "^net.ipv4.conf.all.accept_source_route = 0" /etc/sysctl.conf
-    if [ $? != 0 ]
-    then
-        echo "net.ipv4.conf.all.accept_source_route = 0" >> /etc/sysctl.conf
-    fi
-
-    sysctl -w net.ipv4.conf.all.accept_source_route=0 > /dev/null
+if [ $KERNEL_VAR -ne 0 ]; then
+	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.all.accept_source_route = 0" "net.ipv4.conf.default.accept_redirects"
+	show_message $PDI "sysctl disable source route" fixed
+else
+	show_message $PDI "sysctl disable source route" pass
 fi
 
+sysctl -w net.ipv4.conf.all.accept_source_route=0
+
+# This is just for the limited SCC tool. It doesn't check the real value so we have to write this
+# to /etc/sysctl.conf manually
+if ! grep -q net.ipv4.conf.all.accept_source_route /etc/sysctl.conf ; then
+	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.all.accept_source_route = 0" "net.ipv4.conf.default.accept_redirects"
+fi
+
+
 #END_REMEDY
+
+
 

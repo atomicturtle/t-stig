@@ -294,7 +294,7 @@ function verify_setting {
   if egrep -qi "$findvar" $targetfile; then
     show_message "$msg_test" "$msg_result" pass
   else
-    if [ "$FIXMODE" == "1" ]; then
+    if [ "$FIX_MODE" == "1" ]; then
 
 #      perl -pi -e "s/$replacevar/i" $targetfile
 
@@ -302,8 +302,8 @@ function verify_setting {
 
     else
       show_message "$msg_test" "$msg_result" "$msg_severity"
-      return 1
     fi
+    return 1
   fi
 }
 

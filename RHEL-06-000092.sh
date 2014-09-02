@@ -81,4 +81,11 @@ if [ $KERNEL_VAR -ne 1 ]; then
 else
         show_message $PDI "$MOD_MSG" pass
 fi
+
+# This is just for the limited SCC tool. It doesn't check the real value so we have to write this
+# to /etc/sysctl.conf manually
+if ! grep -q net.ipv4.icmp_echo_ignore_broadcasts /etc/sysctl.conf; then
+        edit_file /etc/sysctl.conf $PDI "net.ipv4.icmp_echo_ignore_broadcasts = 1" "net.ipv4.icmp_echo_ignore_broadcasts"
+
+fi
 # END_REMEDY

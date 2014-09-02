@@ -81,5 +81,11 @@ then
         sysctl -w net.ipv6.conf.default.accept_redirects=0
 fi
 
+# This is just for the limited SCC tool. It doesn't check the real value so we have to write this
+# to /etc/sysctl.conf manually
+if ! grep -q net.ipv6.conf.default.accept_redirects /etc/sysctl.conf; then
+	edit_file  "/etc/sysctl.conf" $PDI "net.ipv6.conf.default.accept_redirects = 0" "net.ipv6.conf.default.accept_redirects"
+fi
+
 #END_REMEDY
 

@@ -75,21 +75,51 @@ SEVERITY=medium
 #BEGIN_CHECK
 . ./aqueduct_functions
 MOD_MSG="PAM disable accounts after 3 failures"
-PKG_CONFIG=/etc/pam.d/system-auth-ac
+PKG_CONFIG=/etc/pam.d/system-auth
+PKG_CONFIG2=/etc/pam.d/password-auth
 verify_setting "deny=3" "unused" $PKG_CONFIG $PDI "$MOD_MSG" $SEVERITY
+
+# Add after the following
+# auth        required      pam_env.so
+# auth        required      pam_faillock.so preauth silent audit deny=3 even_deny_root root_unlock_time=900 unlock_time=604800 fail_interval=900
+
+# Add after the following:
+# auth        sufficient    pam_unix.so try_first_pass
+# auth        [default=die] pam_faillock.so authfail deny=3 unlock_time=604800 fail_interval=900
+
+# Add after the following
+# auth        [default=die] pam_faillock.so authfail deny=3 unlock_time=604800 fail_interval=900
+# auth        required      pam_faillock.so authsucc deny=3 unlock_time=604800 fail_interval=900
+
 
 #END_CHECK
 #BEGIN_REMEDY
 if [ $? -ne 0 ]; then
 	
-	R1="auth        sufficient    pam_unix.so try_first_pass"
-	R5='auth 	[default=die] 	pam_faillock.so authfail deny=3 unlock_time=604800 fail_interval=900'
-	R6='auth	required pam_faillock.so authsucc deny=3 unlock_time=604800 fail_interval=900'
-
+	R1="auth        required      pam_env.so"
+	R5='auth        required      pam_faillock.so preauth silent audit deny=3 even_deny_root root_unlock_time=900 unlock_time=604800 fail_interval=900'
 
 	# find this, add after
 	add_entry_after "$R1" "$R5" $PKG_CONFIG
-	add_entry_after "$R5" "$R6" $PKG_CONFIG
+	add_entry_after "$R1" "$R5" $PKG_CONFIG2
+
+	R1="auth        sufficient    pam_unix.so try_first_pass"
+	R5='auth        [default=die] pam_faillock.so authfail deny=3 unlock_time=604800 fail_interval=900'
+	add_entry_after "$R1" "$R5" $PKG_CONFIG
+	add_entry_after "$R1" "$R5" $PKG_CONFIG2
+
+	R1='auth        requisite     pam_succeed_if.so uid >= 500 quiet'
+	R5='auth        required      pam_faillock.so authsucc deny=3 unlock_time=604800 fail_interval=900'
+	add_entry_after "$R1" "$R5" $PKG_CONFIG
+	add_entry_after "$R1" "$R5" $PKG_CONFIG2
+
+
+	R1='account     required      pam_unix.so'
+	R5='account     required      pam_faillock.so'
+	add_entry_after "$R1" "$R5" $PKG_CONFIG
+	add_entry_after "$R1" "$R5" $PKG_CONFIG2
+
+	
 
 fi
 #END_REMEDY

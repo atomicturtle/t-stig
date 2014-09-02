@@ -92,15 +92,11 @@ IS_ON=`is_chkconfig_on bluetooth`
 #END_CHECK
 #BEGIN_REMEDY
 
-if [ if $IS_RUNNING ]
-then
+if [ $IS_RUNNING ]; then
 	set_status_off bluetooth 
 fi
 
-if [ if $IS_ON ]
-then
-	set_chkconfig_off bluetooth
-fi
+set_chkconfig_off bluetooth
 	
 #END_REMEDY
 

@@ -87,15 +87,17 @@ PDI=RHEL-06-000073
 #
 #BEGIN_CHECK
 
-grep 'U\.S\.Government' /etc/issue > /dev/null
+if [ -f /etc/aqueduct/issue.banner ]; then
+	cp -f /etc/aqueduct/issue.banner > /etc/issue
+else
+	grep 'U\.S\.Government' /etc/issue > /dev/null
 
-#END_CHECK
-#BEGIN_REMEDY
+	#END_CHECK
+	#BEGIN_REMEDY
 
-if [ $? != 0 ]
-then
+	if [ $? != 0 ]; then
 
-  cat <<EOF > /etc/issue
+  		cat <<EOF > /etc/issue
 ##########################################################################
 # You are accessing a U.S. Government (USG) Information System (IS)      #
 # that is provided for USG-authorized use only.                          #
@@ -130,6 +132,7 @@ then
 EOF
 
 
+	fi
 fi
 
 #END_REMEDY
