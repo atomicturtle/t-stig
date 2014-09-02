@@ -76,7 +76,7 @@ KERNEL_VAR=`sysctl  net.ipv4.conf.all.accept_source_route | awk '{ print $NF }'`
 #BEGIN_REMEDY
 
 if [ $KERNEL_VAR -ne 0 ]; then
-	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.all.accept_source_route = 0" "net.ipv4.conf.default.accept_redirects"
+	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.all.accept_source_route = 0" "net.ipv4.conf.all.accept_source_route"
 	show_message $PDI "sysctl disable source route" fixed
 else
 	show_message $PDI "sysctl disable source route" pass
@@ -87,7 +87,7 @@ sysctl -w net.ipv4.conf.all.accept_source_route=0
 # This is just for the limited SCC tool. It doesn't check the real value so we have to write this
 # to /etc/sysctl.conf manually
 if ! grep -q net.ipv4.conf.all.accept_source_route /etc/sysctl.conf ; then
-	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.all.accept_source_route = 0" "net.ipv4.conf.default.accept_redirects"
+	edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.all.accept_source_route = 0" "net.ipv4.conf.all.accept_source_route"
 fi
 
 

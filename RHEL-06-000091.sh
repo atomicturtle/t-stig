@@ -80,5 +80,9 @@ if [ $KERNEL_VAR -ne 0 ]; then
 else
 	show_message $PDI "sysctl disable icmp redirects" pass
 fi
+if ! grep -q net.ipv4.conf.default.accept_redirects /etc/sysctl.conf ; then
+        edit_file /etc/sysctl.conf $PDI "net.ipv4.conf.default.accept_redirects = 0" "net.ipv4.conf.default.accept_redirects"
+fi
+
 #END_REMEDY
 
