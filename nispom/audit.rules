@@ -105,8 +105,12 @@
 -a always,exit -F arch=b32 -S clock_settime -k time-change
 -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change
 -a always,exit -F arch=b64 -S clock_settime -k time-change
--a always,exit -F arch=b64 -S clock_settime -F a0=0 -k time-change
 -w /etc/localtime -p wa -k time-change
+-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+-a always,exit -F arch=b32 -S clock_settime -F a0=0 -k time-change
+-a always,exit -F arch=b64 -S adjtimex -S settimeofday -S stime -k time-change
+-a always,exit -F arch=b64 -S clock_settime -F a0=0 -k time-change
+
 
 #2.6.2.4.2 Record Events that Modify User/Group Information
 -w /etc/group -p wa -k identity
@@ -119,15 +123,15 @@
 #2.6.2.4.3 Record Events that Modify the Systems Network Environment
 -a always,exit -F arch=b32 -S sethostname -S setdomainname -k audit_network_modifications
 -a always,exit -F arch=b64 -S sethostname -S setdomainname -k audit_network_modifications
--a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
--a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
 -w /etc/issue -p wa -k audit_network_modifications
 -w /etc/issue.net -p wa -k audit_network_modifications
--w /etc/issue -p wa -k system-locale
-/etc/issue.net -p wa -k system-locale
 -w /etc/hosts -p wa -k audit_network_modifications
--w /etc/hosts -p wa -k system-locale
 -w /etc/sysconfig/network -p wa -k audit_network_modifications
+-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
+-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+-w /etc/issue -p wa -k system-locale
+-w /etc/issue.net -p wa -k system-locale
+-w /etc/hosts -p wa -k system-locale
 -w /etc/sysconfig/network -p wa -k system-locale
 
 #2.6.2.4.4 Record Events that Modify the System Mandatory Access Controls

@@ -66,9 +66,9 @@ SEVERITY=low
 #BEGIN_REMEDY
 
 PWA=`grep ^PASS_WARN_AGE /etc/login.defs | awk '{ print $2 }'`
-if [ $PWA -lt 7 ]
+if [ $PWA -lt 14 ]
 then 
-    sed  -i 's/^PASS_WARN_AGE.*/PASS_WARN_AGE    1/' /etc/login.defs
+    sed  -i 's/^PASS_WARN_AGE.*/PASS_WARN_AGE    14/' /etc/login.defs
 fi
 #END_REMEDY
 
